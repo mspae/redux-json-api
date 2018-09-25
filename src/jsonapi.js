@@ -82,6 +82,10 @@ class ApiResponse {
   /* eslint-enable */
 }
 
+export const constructApiEndpoint = (resource) => {
+  return `${resource.type}/${resource.id}`;
+};
+
 export const readEndpoint = (endpoint, {
   options = {
     indexLinks: undefined,
@@ -113,12 +117,12 @@ export const readEndpoint = (endpoint, {
   };
 };
 
-export const updateResource = (resource) => {
+export const updateResource = (resource, constructApiEndpoint = constructApiEndpoint) => {
   return (dispatch, getState) => {
     dispatch(apiWillUpdate(resource));
 
     const { axiosConfig } = getState().api.endpoint;
-    const endpoint = `${resource.type}/${resource.id}`;
+    const endpoint = constructApiEndpoint(resource);
 
     const options = {
       ... axiosConfig,
@@ -145,12 +149,12 @@ export const updateResource = (resource) => {
   };
 };
 
-export const deleteResource = (resource) => {
+export const deleteResource = (resource, constructApiEndpoint = constructApiEndpoint) => {
   return (dispatch, getState) => {
     dispatch(apiWillDelete(resource));
 
     const { axiosConfig } = getState().api.endpoint;
-    const endpoint = `${resource.type}/${resource.id}`;
+    const endpoint = constructApiEndpoint(resource);
 
     const options = {
       ... axiosConfig,
