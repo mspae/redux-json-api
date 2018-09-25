@@ -117,12 +117,12 @@ export const readEndpoint = (endpoint, {
   };
 };
 
-export const updateResource = (resource, constructApiEndpoint = constructApiEndpoint) => {
+export const updateResource = (resource, urlConstructor = constructApiEndpoint) => {
   return (dispatch, getState) => {
     dispatch(apiWillUpdate(resource));
 
     const { axiosConfig } = getState().api.endpoint;
-    const endpoint = constructApiEndpoint(resource);
+    const endpoint = urlConstructor(resource);
 
     const options = {
       ... axiosConfig,
@@ -149,12 +149,12 @@ export const updateResource = (resource, constructApiEndpoint = constructApiEndp
   };
 };
 
-export const deleteResource = (resource, constructApiEndpoint = constructApiEndpoint) => {
+export const deleteResource = (resource, urlConstructor = constructApiEndpoint) => {
   return (dispatch, getState) => {
     dispatch(apiWillDelete(resource));
 
     const { axiosConfig } = getState().api.endpoint;
-    const endpoint = constructApiEndpoint(resource);
+    const endpoint = urlConstructor(resource);
 
     const options = {
       ... axiosConfig,
